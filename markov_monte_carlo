@@ -116,14 +116,12 @@ def occupancy(episodes, s, a, timestep_max, gamma):
             rho += gamma**i * occur_times[i] / total_times[i]
     return (1 - gamma) * rho
 
-# episodes = sample(MDP, Pi_1, 20, 5)
-# print('第一条序列\n', episodes[0])
-# print('第二条序列\n', episodes[1])
-# print('第五条序列\n', episodes[4])
 
-timestep_max = 20
-episodes = sample(MDP, Pi_1, timestep_max, 1000)
-V = {"s1": 0, "s2": 0, "s3": 0, "s4": 0, "s5": 0}
-N = {"s1": 0, "s2": 0, "s3": 0, "s4": 0, "s5": 0}
-MC(episodes, V, N, gamma)
-print("使用蒙特卡洛方法计算MDP的状态价值为\n", V)
+timestep_max = 1000
+episodes_1 = sample(MDP, Pi_1, timestep_max, 1000)
+episodes_2 = sample(MDP, Pi_2, timestep_max, 1000)
+
+rho_1 = occupancy(episodes_1, "s4", "概率前往", timestep_max, gamma)
+rho_2 = occupancy(episodes_2, "s4", "概率前往", timestep_max, gamma)
+
+print(rho_1, rho_2)
